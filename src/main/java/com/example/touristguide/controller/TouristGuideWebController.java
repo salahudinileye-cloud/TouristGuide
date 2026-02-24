@@ -18,6 +18,7 @@ public class TouristGuideWebController {
     public TouristGuideWebController(TouristService service) {
         this.service = service;
     }
+
     @GetMapping("/attractions")
     public String showAttractions(Model model) {
         model.addAttribute("attractions", service.getAllAttractions());
@@ -28,23 +29,25 @@ public class TouristGuideWebController {
     public String tags(@PathVariable String name, Model model) {
         TouristAttraction attraction = service.getAttractionByName(name);
 
-        if ( attraction == null ) {
-            model.addAttribute("message" , "kunne ikke finde attraktionen:" + name);
+        if (attraction == null) {
+            model.addAttribute("message", "kunne ikke finde attraktionen:" + name);
             return "notFound";
         }
-        model.addAttribute("attraction" , attraction);
+        model.addAttribute("attraction", attraction);
         return "tags";
     }
+
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("form" , new AttractionF());
+        model.addAttribute("form", new AttractionF());
 
-        model.addAttribute("cities" , service.getCities());
-        model.addAttribute("allTags" , service.getTags());
+        model.addAttribute("cities", service.getCities());
+        model.addAttribute("allTags", service.getTags());
         return "addAttraction";
     }
-    @PostMapping ("/save")
-    public String saveAttraction(@ModelAttribute ("form") AttractionF form) {
+
+    @PostMapping("/save")
+    public String saveAttraction(@ModelAttribute("form") AttractionF form) {
 
         TouristAttraction attraction = new TouristAttraction(
                 form.getName(),
@@ -54,7 +57,30 @@ public class TouristGuideWebController {
 
         service.saveAttraction(attraction);
         return "redirect:/attractions";
+    }
 
+    @GetMapping("/{name}/edit")
+    public String editAttraction(@PathVariable String name, Model model) {
+        TouristAttraction attraction = service.getAttractionByName(name);
+
+        if (attraction == null) {
+            model.addAttribute("message", "Kunne ikke finde attraktionen: " + name);
+            return "notFound";
+        }
+
+        model.addAttribute("attraction", attraction);
+
+
+        model.addAttribute("cities", service.getCities());
+        model.addAttribute("allTags", service.getTags());
+
+        return "updateAttraction";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute TouristAttraction attraction) {
+        service.updateAttraction(attraction);
+        return "redirect:/attractions";
 
     }
 }
