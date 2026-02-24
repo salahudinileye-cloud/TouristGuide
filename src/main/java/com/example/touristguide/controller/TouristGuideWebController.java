@@ -28,10 +28,9 @@ public class TouristGuideWebController {
 
         if (attraction == null) {
             model.addAttribute("message", "kunne ikke finde attraktionen:" + name);
-            return "not found";
+            return "notFound";
         }
         model.addAttribute("attraction", attraction);
         return "tags";
     }
 }
-
