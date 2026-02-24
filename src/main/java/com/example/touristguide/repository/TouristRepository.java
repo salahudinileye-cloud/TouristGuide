@@ -1,7 +1,4 @@
 package com.example.touristguide.repository;
-
-import com.example.touristguide.model.TouristAttraction;
-import com.example.touristguide.service.TouristService;
 import com.example.touristguide.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +14,7 @@ public class TouristRepository {
     public TouristRepository() {
         attractions.add(new TouristAttraction("Runde taarn", "Verdens højeste bygning", "København", List.of("Familie", "Seværdigheder", "Høj")));
         attractions.add(new TouristAttraction("Den Lille Havfrue", "En baddie lavet af sten", "København", List.of("Historie", "Seværdighed")));
-                attractions.add(new TouristAttraction("Kongens Have", "Topgunn der mistede kærligheden", "København", List.of("Have", "Gåtur")));
+        attractions.add(new TouristAttraction("Kongens Have", "Topgunn der mistede kærligheden", "København", List.of("Have", "Gåtur")));
 
     }
 

@@ -1,36 +1,32 @@
-<table>
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Turistattraktioner</title>
     <link th:href="@{/main.css}" rel="stylesheet">
-    <caption>Turistattraktioner
-        </caption>
-<thead>
-<tr>
-    <th scope="col">Navn</th>
-    <th scope="col">Beskrivelse</th>
-</tr>
-</thead>
+</head>
+<body>
+<table>
+    <caption>Turistattraktioner</caption>
+    <thead>
+    <tr>
+        <th scope="col">Navn</th>
+        <th scope="col">Beskrivelse</th>
+        <th scope="col">Tags</th>
+    </tr>
+    </thead>
     <tbody>
-    <tr>
-    <th scope="row">SMK</th>
-        <td>Statens Museum for Kunst</td>
-        <td><a href="tags.html" target="_blank"> Tags </a></td>
-    </tr>
-    <tr>
-        <th scope="row">Odense Zoo</th>
-        <td>Europas bedste zoo</td>
-        <td><a href="tags.html" target="_blank"> Tags </a></td>
-    </tr>
-    <tr>
-        <th scope="row">Dyrehaven</th>
-        <td>Naturpark med skovområder</td>
-        <td><a href="tags.html" target="_blank"> Tags </a></td>
-    </tr>
-    <tr>
-        <th scope="row">Tivoli</th>
-        <td>Forlystelsespark midt i København centrum</td>
-        <td><a href="tags.html" target="_blank"> Tags </a></td>
+    <tr th:each="a : ${attractions}">
+        <th scope="row" th:text="${a.name}">Navn</th>
+        <td th:text="${a.description}">Beskrivelse</td>
+        <td>
+            <a th:href="@{'/' + ${a.name} + '/tags'}">
+                <button type="button">Tags</button>
+            </a>
+        </td>
     </tr>
     </tbody>
-
-    <td><a href="addAttraction.html" target="_blank"> Tilføj Attraktion </a></td>
-    </tr>
 </table>
+<button type="button">Tilføj attraktion</button>
+</body>
+</html>
