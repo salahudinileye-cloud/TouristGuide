@@ -1,34 +1,36 @@
-<!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Turistattraktioner</title>
-    <link rel="stylesheet" th:href="@{/main.css}">
-</head>
-<body>
-
-<h1 th:text = "${Turistattraktioner}"/>
-
+<table>
+    <link th:href="@{/main.css}" rel="stylesheet">
+    <caption>Turistattraktioner
+        </caption>
+<thead>
 <tr>
-
-    <th>>Navn</th>
-    <th>Beskrivelse</th>
-    <th>By</th>
-    <th>Tags</th>
-
+    <th scope="col">Navn</th>
+    <th scope="col">Beskrivelse</th>
 </tr>
-<tr th:each="attraction : ${attractions}">
-    <td th: th:text="${attraction.name}">Navn</td>
-    <td th: th:text="${attraction.description}">Beskrivelse</td>
-    <td th: th:text="${attraction.city}">By</td>
-    <td>
-        <a> th:href="@{/name}/tags(name=${attraction.name}}}">
-            <button type="button">Tags</button>
-        </a>
-    </td>
-</tr>
+</thead>
+    <tbody>
+    <tr>
+    <th scope="row">SMK</th>
+        <td>Statens Museum for Kunst</td>
+        <td><a href="tags.html" target="_blank"> Tags </a></td>
+    </tr>
+    <tr>
+        <th scope="row">Odense Zoo</th>
+        <td>Europas bedste zoo</td>
+        <td><a href="tags.html" target="_blank"> Tags </a></td>
+    </tr>
+    <tr>
+        <th scope="row">Dyrehaven</th>
+        <td>Naturpark med skovområder</td>
+        <td><a href="tags.html" target="_blank"> Tags </a></td>
+    </tr>
+    <tr>
+        <th scope="row">Tivoli</th>
+        <td>Forlystelsespark midt i København centrum</td>
+        <td><a href="tags.html" target="_blank"> Tags </a></td>
+    </tr>
+    </tbody>
 
-
-</body>
-</html>
+    <td><a href="addAttraction.html" target="_blank"> Tilføj Attraktion </a></td>
+    </tr>
+</table>
