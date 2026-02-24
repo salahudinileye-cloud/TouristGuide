@@ -19,8 +19,15 @@ public class TouristService {
     }
     public TouristAttraction getAttractionByName(String name) {
         return repository.findByName(name);
+    }
+    public void  saveAttraction(TouristAttraction attraction) {
+        repository.add(attraction);
+    }
+    public List<String> getCities() {
+        return repository.getCities();
+    }
+    public List<String> getTags() {
+        return repository.getTags();
 
     }
-
-
 }
