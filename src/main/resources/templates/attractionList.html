@@ -2,32 +2,49 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Turistattraktioner</title>
+    <title>Attraktioner</title>
     <link th:href="@{/main.css}" rel="stylesheet">
 </head>
 <body>
+
 <table>
-    <caption>Turistattraktioner</caption>
     <thead>
     <tr>
-        <th scope="col">Navn</th>
-        <th scope="col">Beskrivelse</th>
-        <th scope="col">Tags</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>By</th>
+        <th>Tags</th>
+        <th>Handling</th>
     </tr>
     </thead>
+
     <tbody>
     <tr th:each="a : ${attractions}">
-        <th scope="row" th:text="${a.name}">Navn</th>
+        <td th:text="${a.name}">Navn</td>
         <td th:text="${a.description}">Beskrivelse</td>
+        <td th:text="${a.city}">By</td>
+
         <td>
             <a th:href="@{'/' + ${a.name} + '/tags'}">
                 <button type="button">Tags</button>
             </a>
         </td>
+
+        <td>
+            <a th:href="@{'/' + ${a.name} + '/edit'}">
+                <button type="button">Opdater</button>
+            </a>
+            <button type="button" disabled>Slet</button>
+        </td>
     </tr>
     </tbody>
 </table>
+
+<br>
+
 <a th:href="@{/add}">
     <button type="button">Tilføj attraktion</button>
-</a></body>
+</a>
+
+</body>
 </html>
