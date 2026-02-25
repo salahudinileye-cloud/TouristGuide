@@ -2,6 +2,7 @@ package com.example.touristguide.controller;
 
 import com.example.touristguide.model.AttractionF;
 import com.example.touristguide.model.TouristAttraction;
+import com.example.touristguide.repository.TouristRepository;
 import com.example.touristguide.service.TouristService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class TouristGuideWebController {
 
     private final TouristService service;
+    private final TouristRepository touristRepository;
 
-    public TouristGuideWebController(TouristService service) {
+    public TouristGuideWebController(TouristService service, TouristRepository touristRepository) {
         this.service = service;
+        this.touristRepository = touristRepository;
     }
 
     @GetMapping("/attractions")
@@ -47,6 +50,8 @@ public class TouristGuideWebController {
         return "addAttraction";
     }
 
+
+
     @PostMapping("/save")
     public String saveAttraction(@ModelAttribute("form") AttractionF form) {
 
@@ -59,6 +64,32 @@ public class TouristGuideWebController {
         service.saveAttraction(attraction);
         return "redirect:/attractions";
     }
+
+    @GetMapping("/attractions/delete/{name}")
+    public String deleteAttraction(@PathVariable String name, Model model) {
+
+        TouristAttraction attraction = service.getAttractionByName(name);
+
+        if (attraction == null) {
+            model.addAttribute("message", "Kunne ikke finde attraktionen: " + name);
+            return "notFound";
+        }
+
+        model.addAttribute("attraction", attraction);
+
+        return "deleteAttraction";
+    }
+
+    @PostMapping("/attractions/delete/{name}")
+    public String deleteAttraction2(@PathVariable String name){
+
+        service.deleteAttraction(name);
+
+        return "redirect:/attractions";
+
+    }
+
+
 
     @GetMapping("/{name}/edit")
     public String editAttraction(@PathVariable String name, Model model) {

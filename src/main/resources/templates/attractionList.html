@@ -34,7 +34,10 @@
             <a th:href="@{'/' + ${a.name} + '/edit'}">
                 <button type="button">Opdater</button>
             </a>
-            <button type="button" disabled>Slet</button>
+            <a th:href="@{/attractions/delete/{name}(name=${a.name})}">
+                <button type="button">Slet</button>
+            </a>
+
         </td>
     </tr>
     </tbody>
