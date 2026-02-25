@@ -25,6 +25,7 @@ public class TouristGuideWebController {
         return "attractionList";
     }
 
+
     @GetMapping("/{name}/tags")
     public String tags(@PathVariable String name, Model model) {
         TouristAttraction attraction = service.getAttractionByName(name);
