@@ -62,18 +62,6 @@ class TouristGuideWebControllerTest {
                 .andExpect(model().attribute("attraction", mockAttraction));
     }
 
-//    void tagsWhenAttractionMissing() throws Exception {
-//
-//        when(service.getAttractionByName("Ukendt")).thenReturn(null);
-//
-//
-//        mockMvc.perform(get("/{name}/tags", "Ukendt"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("notFound"))
-//                .andExpect(model().attributeExists("message"));
-//    }
-
-
     @Test
     void showAddForm() throws Exception {
 
