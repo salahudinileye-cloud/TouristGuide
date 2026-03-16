@@ -34,6 +34,11 @@ public class TouristRepository {
         attractions.add(attraction);
     }
 
+    public void delete(TouristAttraction attraction){
+
+        attractions.removeIf(a -> a.getName().equals(attraction.getName()));
+    }
+
     public List < String > getCities( ) {
         return cities;
     }
