@@ -3,40 +3,57 @@ package com.example.touristguide.repository;
 import com.example.touristguide.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 
 @Repository
 public class TouristRepository {
 
-    private final List < TouristAttraction > attractions = new ArrayList <>();
+    private final JdbcTemplate jdbcTemplate;
+
+    public TouristRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private static class TouristAttractionRowMapper implements RowMapper<TouristAttraction> {
+        @Override
+        public TouristAttraction mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new TouristAttraction(
+                    rs.getString("name"),
+                    rs.getString("description"),
+                    rs.getString("city"),
+                    List.of()
+            );
+        }
+    }
 
     private final List < String > cities = List.of("København" , "Odense" , "Aarhus" , "Aalborg");
     private final List < String > tags = List.of("Familie" , "Historie" , "Seværdighed" , "Have" , "Gåtur" , "Mad" , "Museum");
 
-    public TouristRepository( ) {
-        attractions.add(new TouristAttraction("Runde taarn" , "Verdens højeste bygning" , "København" , List.of("Familie" , "Seværdigheder" , "Høj")));
-        attractions.add(new TouristAttraction("Den Lille Havfrue" , "En baddie lavet af sten" , "København" , List.of("Historie" , "Seværdighed")));
-        attractions.add(new TouristAttraction("Kongens Have" , "Topgunn der mistede kærligheden" , "København" , List.of("Have" , "Gåtur")));
-
-    }
-
     public List < TouristAttraction > getAll( ) {
-        return attractions;
+        String sql = "SELECT name, description, city FROM tourist_attraction";
+
+        return jdbcTemplate.query(sql, new TouristAttractionRowMapper());
     }
 
     public TouristAttraction findByName( String name ) {
-        return attractions.stream().filter(a -> a.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+        String sql = "SELECT name, description, city FROM tourist_attraction WHERE name = ?";
+
+        return jdbcTemplate.queryForObject(sql, new TouristAttractionRowMapper(), name);
     }
 
     public void add( TouristAttraction attraction ) {
-        attractions.add(attraction);
+        String sql = "INSERT INTO tourist_attraction (name, description, city) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, attraction.getName(), attraction.getDescription(), attraction.getCity());
     }
 
     public void delete(TouristAttraction attraction){
-
-        attractions.removeIf(a -> a.getName().equals(attraction.getName()));
+            String sql = "DELETE FROM tourist_attraction WHERE name = ?";
+            jdbcTemplate.update(sql, attraction.getName());
     }
 
     public List < String > getCities( ) {
@@ -48,15 +65,11 @@ public class TouristRepository {
     }
 
     public void update( TouristAttraction updated ) {
-        for ( int i = 0 ; i < attractions.size() ; i++ ) {
-            TouristAttraction current = attractions.get(i);
-
-            if ( current.getName().equalsIgnoreCase(updated.getName()) ) {
-                current.setDescription(updated.getDescription());
-                current.setCity(updated.getCity());
-                current.setTags(updated.getTags());
-                return;
-            }
-        }
+        String sql = "UPDATE tourist_attraction SET description = ?, city = ? WHERE name = ?";
+        jdbcTemplate.update(
+                sql,
+                updated.getDescription(),
+                updated.getCity(),
+            updated.getName());
     }
 }
