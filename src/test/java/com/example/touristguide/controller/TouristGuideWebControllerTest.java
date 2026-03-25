@@ -66,7 +66,7 @@ class TouristGuideWebControllerTest {
     void showAddForm() throws Exception {
 
         when(service.getCities()).thenReturn(Arrays.asList("København", "Odense", "Aarhus", "Aalborg"));
-        when(service.getTags()).thenReturn(Arrays.asList("Familie", "Historie", "Seværdighed", "Have", "Gåtur", "Mad", "Museum"));
+        //when(service.getTags()).thenReturn(Arrays.asList("Familie", "Historie", "Seværdighed", "Have", "Gåtur", "Mad", "Museum"));
 
 
         mockMvc.perform(get("/add"))
@@ -98,7 +98,7 @@ class TouristGuideWebControllerTest {
         TouristAttraction mockAttraction = new TouristAttraction("Runde taarn", "Verdens højeste bygning", "København", Arrays.asList("Familie"));
         when(service.getAttractionByName("Runde taarn")).thenReturn(mockAttraction);
         when(service.getCities()).thenReturn(Arrays.asList("København", "Odense", "Aarhus", "Aalborg"));
-        when(service.getTags()).thenReturn(Arrays.asList("Familie", "Historie", "Seværdighed"));
+      //  when(service.getTags()).thenReturn(Arrays.asList("Familie", "Historie", "Seværdighed"));
 
 
         mockMvc.perform(get("/{name}/edit", "Runde taarn"))
