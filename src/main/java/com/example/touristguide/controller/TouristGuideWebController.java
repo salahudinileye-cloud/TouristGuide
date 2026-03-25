@@ -89,7 +89,6 @@ public class TouristGuideWebController {
     }
 
 
-
     @GetMapping("/{name}/edit")
     public String editAttraction(@PathVariable String name, Model model) {
         TouristAttraction attraction = service.getAttractionByName(name);

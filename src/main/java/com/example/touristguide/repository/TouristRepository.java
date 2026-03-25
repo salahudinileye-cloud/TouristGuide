@@ -32,7 +32,6 @@ public class TouristRepository {
         }
     }
 
-
     public List<TouristAttraction> getAll() {
         String sql = "SELECT ta.name, ta.description, c.name as city FROM tourist_attraction ta JOIN city c ON ta.city_id =c.id";
 
